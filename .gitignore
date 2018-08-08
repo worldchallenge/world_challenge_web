@@ -1,6 +1,6 @@
 # Django DEV
 db.sqlite3
-
+world_challenge_user_profile/migrations/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 */__pycache__/
