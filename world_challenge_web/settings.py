@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Django Auth Model User
+AUTH_USER_MODEL = 'world_challenge_user_profile.User'
 
 # Application definition
 
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'world_challenge_user_profile',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT = 'images'
