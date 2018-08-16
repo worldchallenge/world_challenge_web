@@ -1,3 +1,6 @@
+# Swap files
+*.swp
+
 # Django DEV
 db.sqlite3
 world_challenge_user_profile/migrations/

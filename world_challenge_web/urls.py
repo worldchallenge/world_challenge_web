@@ -22,28 +22,15 @@ from django.views.generic import TemplateView
 
 from world_challenge_user_profile import urls as profile_urls
 
-from world_challenge_user_profile.views import (
+from .views import (
     HomeView,
-    SignupView,
-    LogoutView,
-    activate,
 )
 urlpatterns = [
     path('profile/', include(profile_urls)),
     path('admin/', admin.site.urls),
-    path(r'^$',
+    path('home/',
          HomeView.as_view(),
          name='home'),
-    path(r'^logout/',
-         LogoutView.as_view(),
-         name='logout'),
-    re_path(r'^activate/?P<uidb64>[0-9A-Za-z_\-]+)/'
-            '(?P<token>[0-9A-Za-z]{1,13})-[0-9A-Za-z]{1,20})/$',
-            activate,
-            name='activate'),
-    path(r'^signup/confirm/',
-         TemplateView.as_view(template_name='confirm.html'),
-         name='confirm'),
 ]
 if settings.DEBUG:
     urlpatterns += static(
