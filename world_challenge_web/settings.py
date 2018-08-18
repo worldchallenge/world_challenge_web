@@ -57,7 +57,7 @@ ROOT_URLCONF = 'world_challenge_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS':  ['world_challenge_web/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
