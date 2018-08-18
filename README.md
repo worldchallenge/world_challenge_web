@@ -40,7 +40,7 @@ pip install -r requirements.txt
 ./manage.py runserver 0.0.0.0:8000
 ```
 
-## Basic Login and Login process
+### Basic Login and Logout process
 
 Simple templates are used until style and design are agreed upon.
 
