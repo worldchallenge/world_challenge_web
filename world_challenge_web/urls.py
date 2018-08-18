@@ -28,6 +28,7 @@ from .views import (
 urlpatterns = [
     path('profile/', include(profile_urls)),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('home/',
          HomeView.as_view(),
          name='home'),

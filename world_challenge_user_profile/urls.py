@@ -10,7 +10,7 @@ from .views import (
 )
 
 urlpatterns = [
-        path('profiles/signup/', views.SignupView.as_view(), name='signup'),
+        path('profiles/signup/', SignupView.as_view(), name='signup'),
         path('profiles/signup/confirm/',
                       TemplateView.as_view(template_name='confirm.html'),
                       name='confirm'),
