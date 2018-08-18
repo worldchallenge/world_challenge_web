@@ -46,10 +46,6 @@ Simple templates are used until style and design are agreed upon.
 
 1. Homepage located at 127.0.0.1:8000/home/ consists of a single link to Login.
 
-2. Login takes you to a page that requests Username and Password with a url http://127.0.0.1:8000/accounts/login/.  If the information is not verified a message "Your username and password didn't match. Please try again." is given.
-
-If successful, the user is taken to http://127.0.0.1:8000/accounts/profile/.  This page so far only shows that authentication is successful and will be developed further.
-
-The Login page also has a Lost Password link that leads to http://127.0.0.1:8000/accounts/password_reset/ and gives a very simple opportunity to Reset Password.
+2. Login takes you to a page that requests Username and Password with a url http://127.0.0.1:8000/accounts/login/.  If the information is not verified a message "Your username and password didn't match. Please try again." is given.  If successful, the user is taken to http://127.0.0.1:8000/accounts/profile/.  This page so far only shows that authentication is successful and will be developed further.  The Login page also has a Lost Password link that leads to http://127.0.0.1:8000/accounts/password_reset/ and gives a very simple opportunity to Reset Password.
 
 3. The Profile page has a link enabling the user to Logout.
