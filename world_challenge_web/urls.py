@@ -17,6 +17,9 @@ urlpatterns = [
     path('accounts/profile/',
          TemplateView.as_view(template_name='profile.html'),
          name='profile'),
+    path('accounts/password_reset/',
+         TemplateView.as_view(template_name='password_reset_form.html'),
+         name='password_reset'),
 ]
 if settings.DEBUG:
     urlpatterns += static(
