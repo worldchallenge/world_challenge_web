@@ -1,9 +1,6 @@
 body {
   padding-top: 5rem;
 }
-h1 {
-  color: blue;
-}
 .starter-template {
   padding: 3rem 1.5rem;
   text-align: center;
@@ -11,4 +8,11 @@ h1 {
 .starter-h1 { 
   background-color: blue;
   color: white;
+}
+.red {
+  color: red;
+}
+
+.underline {
+  border-bottom-color: red;
 }
