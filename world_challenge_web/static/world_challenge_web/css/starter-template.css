@@ -14,7 +14,7 @@ body {
 }
 
 .underline {
-  border-bottom-color: red;
+  text-decoration: underline;
 }
 * {
     box-sizing: border-box;

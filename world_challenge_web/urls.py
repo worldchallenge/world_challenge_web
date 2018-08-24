@@ -5,11 +5,14 @@ from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
 
+from .views import (
+    HomeView,
+)
 # from world_challenge_user_profile import urls as profile_urls
 
 urlpatterns = [
     path('home/',
-         TemplateView.as_view(template_name='home.html'),
+         HomeView.as_view(template_name='home.html'),
          name='home'),
 #    path('profile/', include(profile_urls)),
     path('admin/', admin.site.urls),
