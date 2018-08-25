@@ -5,10 +5,7 @@ from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
 
-from .views import (
-    HomeView,
-    SignupView,
-)
+from .views import *
 
 from .forms import SignupForm
 
@@ -29,6 +26,12 @@ urlpatterns = [
     path('accounts/password_reset/',
          TemplateView.as_view(template_name='password_reset_form.html'),
          name='password_reset'),
+    path('accounts/signup/', SignupView.as_view(template_name='signup.html'),
+         name='signup'),
+    path('accounts/account_activation_sent/', account_activation_sent.as_view(),
+         name='account_activation_sent'),
+    path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+            core_views.activate, name='activate'),
 ]
 if settings.DEBUG:
     urlpatterns += static(
