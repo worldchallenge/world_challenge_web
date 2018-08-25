@@ -17,6 +17,8 @@ urlpatterns = [
 #    path('profile/', include(profile_urls)),
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
+    path('accounts/register/',
+         RegistrationView.as_view(form_class=UserRegistrationForm)),
     path('accounts/profile/',
          TemplateView.as_view(template_name='profile.html'),
          name='profile'),
