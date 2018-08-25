@@ -3,12 +3,12 @@
 {% block content %}
 
 {% if form.errors %}
-  <p class="underline">Your username and password didn't match. Please try again.</p>
+  <p class="red underline">Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 {% if next %}
   {% if user.is_authenticated %}
-    <p class="warning">Your account doesn't have access to this page. To proceed,
+    <p class="red underline">Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
   {% else %}
     <p>Please login to see this page.</p>

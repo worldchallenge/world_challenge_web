@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'world_challenge_user_profile',
     'world_challenge_web',
+    'registration',
 ]
 
 MIDDLEWARE = [
