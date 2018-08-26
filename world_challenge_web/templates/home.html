@@ -3,5 +3,11 @@
 {% block content  %}
 
         <h1 class="starter-h1">Welcome to the World Challenge Contest!</h1>
-        <p class="red">Some tester text</p>
+        <p>blah blah blah</p>
+{% if user.is_authenticated %}
+    <p>You are logged in!</p>
+  {% else %}
+    <p class="red underline">Please login to see this page.</p>
+  {% endif %}
+
 {% endblock %}
