@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'world_challenge_user_profile',
     'world_challenge_web',
     'registration',
+    'sendgrid',
 ]
 
 MIDDLEWARE = [
@@ -128,10 +129,12 @@ STATIC_ROOT = 'static'
 MEDIA_URL = '/images/'
 MEDIA_ROOT = 'images'
 
-#LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home'
+ACCOUNT_ACTIVATION_DAYS = 1
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'sendgrid_username'
-EMAIL_HOST_PASSWORD = 'sendgrid_password'
+EMAIL_HOST_USER = 'hecklerchris'
+EMAIL_HOST_PASSWORD = 'methman420'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

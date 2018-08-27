@@ -24,6 +24,8 @@ from django.contrib.auth import get_user_model
 
 from sendgrid.helpers.mail import *
 
+from django.core.mail import EmailMessage, send_mail
+
 from .forms import SignupForm
 
 from .tokens import account_activation_token
@@ -40,7 +42,6 @@ class HomeView(TemplateView):
 def signup(request):
     """If POST and form is filled out then email is sent to user.  If not
        then user is presented with form to complete."""
-    sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
 
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -49,38 +50,42 @@ def signup(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            to_email = Email("heckles83@gmail.com")
-            from_email = Email("hecklerchris@hotmail.com")
+            to_email = user.email
+            from_email = "hecklerchris@hotmail.com"
             subject = "Welcome to the World Challenge Contest!"
-            content = render_to_string('account_activation_email.html', {
+            content = render_to_string('registration/account_activation_email.html', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': account_activation_token.make_token(user),
             })
-            mail = Mail(from_email, subject, to_email, content)
-            sg.client.mail.send.post(request_body=mail.get())
-            return redirect('account_activation_sent')
+            #mail = Mail(from_email, subject, to_email, content)
+            email = send_mail(subject, content, from_email, [to_email])
+            #response = sg.client.mail.send.post(request_body=mail.get())
+            return HttpResponse('Thank you!')
+        else:
+            return HttpResponse("Try again fool!")
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-def account_activation_sent(self, request):
+def account_activation_sent(request):
     """Handles view for sent activation email to user."""
 
-    return render(request, 'account_activation_sent.html')
+    return render(request, 'registration/account_activation_sent.html')
 
 def activate(request, uidb64, token):
+    """Performs user account activation."""
+
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = user.objects.get(pk=uid)
+        user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
     if user is not None and account_activation_token.check_token(user,
                                                                  token):
         user.is_active = True
-        user.profile.email_confirmed = True
         user.save()
         login(request, user)
 

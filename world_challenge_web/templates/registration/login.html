@@ -6,15 +6,6 @@
   <p class="red underline">Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-{% if next %}
-  {% if user.is_authenticated %}
-    <p class="red underline">Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-  {% else %}
-    <p>Please login to see this page.</p>
-  {% endif %}
-{% endif %}
-
 <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
 <form method="post" action="{% url 'login' %}">
@@ -43,7 +34,7 @@
 
 <div class="container">
 <form class="form-signin">
-<img class="mb-4" src="../../assets/brand/bootstrap-    solid.svg" alt="" width="72" height="72">
+<img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -10,9 +10,9 @@ from . import views
 from .forms import SignupForm
 
 urlpatterns = [
-    path('accounts/activate/(uidb64:\w+)',
+    re_path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
          views.activate,
-         name='registration_activate'),
+         name='activate'),
     path('home/',
          views.HomeView.as_view(template_name='home.html'),
          name='home'),
