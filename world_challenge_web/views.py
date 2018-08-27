@@ -1,33 +1,12 @@
-import sendgrid
-
-import os
-
 from django.contrib.sites.shortcuts import get_current_site
-
 from django.shortcuts import render, redirect
-
 from django.utils.encoding import force_bytes, force_text
-
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
 from django.template.loader import render_to_string
-
 from django.http import HttpResponse
-
-from django.template import loader
-
 from django.views.generic.base import TemplateView
-
-from django.views import View
-
-from django.contrib.auth import get_user_model
-
-from sendgrid.helpers.mail import *
-
-from django.core.mail import EmailMessage, send_mail
-
+from django.core.mail import send_mail
 from .forms import SignupForm
-
 from .tokens import account_activation_token
 
 
@@ -53,13 +32,14 @@ def signup(request):
             to_email = user.email
             from_email = "hecklerchris@hotmail.com"
             subject = "Welcome to the World Challenge Contest!"
-            content = render_to_string('registration/account_activation_email.html', {
+            content = render_to_string('registration/account_activation_email.'
+                                       'html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': account_activation_token.make_token(user),
             })
-            email = send_mail(subject, content, from_email, [to_email])
+            send_mail(subject, content, from_email, [to_email])
             return render(request, 'registration/account_activation_sent.html')
         else:
             return HttpResponse("Try again fool!")
@@ -67,10 +47,12 @@ def signup(request):
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
 def account_activation_sent(request):
     """Handles view for sent activation email to user."""
 
     return render(request, 'registration/account_activation_sent.html')
+
 
 def activate(request, uidb64, token):
     """Performs user account activation."""
@@ -78,7 +60,7 @@ def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+    except (TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
 
     if user is not None and account_activation_token.check_token(user,
@@ -91,6 +73,7 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'account_activation_invalid.html')
 
+
 def password_reset(request):
     """Handles logic for password reset"""
 
@@ -98,4 +81,3 @@ def password_reset(request):
         return render(request, 'registration/password_reset.html')
     else:
         return render(request, 'registration/password_reset_invalid.html')
-
