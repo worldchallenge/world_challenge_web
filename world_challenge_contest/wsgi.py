@@ -1,5 +1,5 @@
 """
-WSGI config for world_challenge_web project.
+WSGI config for world_challenge_contest project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'world_challenge_web.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'world_challenge_contest.settings')
 
 application = get_wsgi_application()
