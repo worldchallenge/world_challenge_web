@@ -59,10 +59,8 @@ def signup(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': account_activation_token.make_token(user),
             })
-            #mail = Mail(from_email, subject, to_email, content)
             email = send_mail(subject, content, from_email, [to_email])
-            #response = sg.client.mail.send.post(request_body=mail.get())
-            return HttpResponse('Thank you!')
+            return render(request, 'registration/account_activation_sent.html')
         else:
             return HttpResponse("Try again fool!")
     else:
@@ -92,3 +90,12 @@ def activate(request, uidb64, token):
         return redirect('home')
     else:
         return render(request, 'account_activation_invalid.html')
+
+def password_reset(request):
+    """Handles logic for password reset"""
+
+    if user.is_active:
+        return render(request, 'registration/password_reset.html')
+    else:
+        return render(request, 'registration/password_reset_invalid.html')
+
