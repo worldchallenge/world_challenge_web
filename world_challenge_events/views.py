@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views import View
 from django.http import HttpResponseRedirect
+from django.core import serializers
 
 from .forms import CreateEventForm
 from .models import Event
@@ -22,8 +23,9 @@ class EventListView(ListView):
 class CreateEventFormView(View):
     """This view handles app logic for event creation"""
 
+    model = Event
     form_class = CreateEventForm
-    template_name = "create_event.html"
+    template_name = "world_challenge_events/create_event.html"
     initial = {'key': 'value'}
 
     def get(self, request, *args, **kwargs):
@@ -33,6 +35,10 @@ class CreateEventFormView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/success/')
+            event = form.save(commit=False)
+            event.save()
+            return HttpResponseRedirect('/events')
+        else:
+            return HttpResponseRedirect('create_event_error.html')
 
         return render(request, self.template_name, {'form': form})

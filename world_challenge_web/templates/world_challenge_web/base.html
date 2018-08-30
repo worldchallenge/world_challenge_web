@@ -32,8 +32,12 @@
           <li class="nav-item">
             <a class="nav-link" href="/profile">Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/events">Events</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Events</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="/events">Events Home</a>
+              <a class="dropdown-item" href="create_event">Create Event</a>
+            </div>
           </li>
 	  {% else %}
           <li class="nav-item">
