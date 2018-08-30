@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic import DetailView
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.core import serializers
@@ -10,6 +11,7 @@ from .models import Event
 
 
 class EventListView(ListView):
+    """Shows Events lined up."""
 
     model = Event
     paginate_by = 50
@@ -42,3 +44,10 @@ class CreateEventFormView(View):
             return HttpResponseRedirect('create_event_error.html')
 
         return render(request, self.template_name, {'form': form})
+
+
+class EventDetailView(DetailView):
+    """Home page for individual events"""
+
+    model = Event
+    template_name = 'world_challenge_events/event_home.html'
