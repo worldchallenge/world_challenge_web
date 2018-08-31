@@ -1,12 +1,10 @@
 {% extends 'world_challenge_web/base.html' %}
-
+`
 {% block content %}
 <h1>Events</h1>
 <ul>
 {% for event in object_list %}
-    <li><a href="{{ event.get_absolute_url }}">{{ event.name }}</a>
-        {{ event.description }}
-        {{ event.location }} 
+    <li>  <a href="{% url 'event-detail' event.name.pk %}">{{ event.name }}</a>
 {% empty %}
     <li>No articles yet.</li>
 {% endfor %}

@@ -50,4 +50,4 @@ class EventDetailView(DetailView):
     """Home page for individual events"""
 
     model = Event
-    template_name = 'world_challenge_events/event_home.html'
+    template_name = 'world_challenge_events/event_detail.html'
