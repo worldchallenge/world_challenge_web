@@ -3,10 +3,8 @@
 {% block content %}
 <h1>Events</h1>
 <ul>
-{% for event in object_list %}
-    <li>  <a href="{% url 'event-detail' event.name.pk %}">{{ event.name }}</a>
-{% empty %}
-    <li>No articles yet.</li>
-{% endfor %}
+{% for event in total_event_list %}
+    <li>  <a href="{% url 'event-detail' event.id.pk %}">{{ event.name }}</a></li>
+  {% endfor %}
 </ul>
 {% endblock %}

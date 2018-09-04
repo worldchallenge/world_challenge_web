@@ -1,9 +1,9 @@
 from django.utils import timezone
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.views import View
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core import serializers
 
 from .forms import CreateEventForm
@@ -13,13 +13,10 @@ from .models import Event
 class EventListView(ListView):
     """Shows Events lined up."""
 
-    model = Event
+    context_object_name = 'total_event_list'
+    queryset = Event.objects.order_by('name')
     paginate_by = 50
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context
+    template_name = 'world_challenge_events/event_list.html'
 
 
 class CreateEventFormView(View):
@@ -39,15 +36,18 @@ class CreateEventFormView(View):
         if form.is_valid():
             event = form.save(commit=False)
             event.save()
-            return HttpResponseRedirect('/events')
+            return HttpResponseRedirect(
+                'world_challenge_events/event-list.html')
         else:
-            return HttpResponseRedirect('create_event_error.html')
-
+            return HttpResponseRedirect(
+                'world_challenge_events/create_event_error.html')
         return render(request, self.template_name, {'form': form})
 
 
 class EventDetailView(DetailView):
     """Home page for individual events"""
 
-    model = Event
     template_name = 'world_challenge_events/event_detail.html'
+    def get_queryset(request, event_id):
+        event = total_events.get(pk=event_id)
+        return event
