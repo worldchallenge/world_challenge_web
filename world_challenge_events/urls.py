@@ -7,7 +7,7 @@ from .views import (
 from . import models
 
 urlpatterns = [
-    path('event_list/', EventListView.as_view(), name='event-list'),
+    path('', EventListView.as_view(), name='event-list'),
     path('event_list/create_event/', CreateEventFormView.as_view(),
          name='create-event'),
     path('event_list/event_detail/<uuid:pk>/',EventDetailView.as_view(),
