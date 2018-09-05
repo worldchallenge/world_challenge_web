@@ -37,7 +37,7 @@ class CreateEventFormView(View):
             event = form.save(commit=False)
             event.save()
             return HttpResponseRedirect(
-                'world_challenge_events/event-list.html')
+                'world_challenge_events/event_list.html')
         else:
             return HttpResponseRedirect(
                 'world_challenge_events/create_event_error.html')
@@ -47,7 +47,4 @@ class CreateEventFormView(View):
 class EventDetailView(DetailView):
     """Home page for individual events"""
 
-    template_name = 'world_challenge_events/event_detail.html'
-    def get_queryset(request, event_id):
-        event = total_events.get(pk=event_id)
-        return event
+    model = Event
