@@ -4,7 +4,7 @@
 <h1>Events</h1>
 <ul>
 {% for event in total_event_list %}
- <li> {{ event.name }}</li>
+  <li> <a href="{{ event.get_absolute_url }}">{{ event.name }}</a> ({{ event.description }})</li>
   {% endfor %}
 </ul>
 {% endblock %}

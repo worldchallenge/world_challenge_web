@@ -48,3 +48,9 @@ class EventDetailView(DetailView):
     """Home page for individual events"""
 
     model = Event
+
+    def get_book_detail(self, request, primary_key):
+        event = get_object_or_404(Event, pk=primary_key)
+        return render(request, 'world_challenge_events/event_detail.html',
+                      context={'event': event})
+
