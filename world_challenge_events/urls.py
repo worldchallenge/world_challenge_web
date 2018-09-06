@@ -7,10 +7,10 @@ from .views import (
 from . import models
 
 urlpatterns = [
-    path('', EventListView.as_view(), name='event-list'),
-    path('create_event/', CreateEventFormView.as_view(),
+    path('list/', EventListView.as_view(), name='event-list'), 
+    path('create/', CreateEventFormView.as_view(),
          name='create-event'),
-    path('event_detail/<uuid:pk>/',EventDetailView.as_view(),
+    path('detail/<uuid:pk>/',EventDetailView.as_view(),
          name='event-detail'),
 
 ]

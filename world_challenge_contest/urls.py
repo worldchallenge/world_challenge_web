@@ -18,7 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('world_challenge_web.urls')),
-    path('event_list/', include('world_challenge_events.urls')),
+    path('event/', include('world_challenge_events.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('wc_auth.urls')),
 ]

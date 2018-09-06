@@ -5,6 +5,7 @@ from django.views.generic import DetailView
 from django.views import View
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core import serializers
+from django.contrib.auth.models import User
 
 from .forms import CreateEventForm
 from .models import Event
@@ -24,7 +25,7 @@ class CreateEventFormView(View):
 
     model = Event
     form_class = CreateEventForm
-    template_name = "world_challenge_events/create_event.html"
+    template_name = "world_challenge_events/event_create.html"
     initial = {'key': 'value'}
 
     def get(self, request, *args, **kwargs):
@@ -35,12 +36,13 @@ class CreateEventFormView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             event = form.save(commit=False)
+            event.owner = User.objects.get(username=request.user)
             event.save()
             return HttpResponseRedirect(
-                'world_challenge_events/event_list.html')
+                '/event/list/')
         else:
             return HttpResponseRedirect(
-                'world_challenge_events/create_event_error.html')
+                'world_challenge_events/event_create_error.html')
         return render(request, self.template_name, {'form': form})
 
 
@@ -49,7 +51,7 @@ class EventDetailView(DetailView):
 
     model = Event
 
-    def get_book_detail(self, request, primary_key):
+    def get_event_detail(self, request, primary_key):
         event = get_object_or_404(Event, pk=primary_key)
         return render(request, 'world_challenge_events/event_detail.html',
                       context={'event': event})
