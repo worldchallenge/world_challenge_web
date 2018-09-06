@@ -20,7 +20,7 @@ class EventListView(ListView):
     template_name = 'world_challenge_events/event_list.html'
 
 
-class CreateEventFormView(View):
+class EventCreateFormView(View):
     """This view handles app logic for event creation"""
 
     model = Event
