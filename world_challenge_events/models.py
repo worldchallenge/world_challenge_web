@@ -16,3 +16,9 @@ class Event(models.Model):
     description = models.CharField(max_length=400, blank=True)
     date = models.DateTimeField(default=datetime.now)
     file_upload = models.FileField(upload_to='media', blank=True)
+
+
+class Vote(models.Model):
+    """Enables voting and connects with Event and User"""
+
+

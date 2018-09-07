@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'wc_auth',
     'world_challenge_web',
     'world_challenge_events',
+    'vote',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'world_challenge_contest.urls'
@@ -128,3 +131,5 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o644
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = "/var/www/media"
+
+INTERNAL_IPS = '127.0.0.1'
