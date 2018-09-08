@@ -78,7 +78,7 @@ class VoteView(View):
         if not next:
             next = '/'
         
-        print app
+        print(app)
         
         try:
             app_label, model = app.split('_')

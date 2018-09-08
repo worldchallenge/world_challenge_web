@@ -1,6 +1,60 @@
 from django import template
 
+from django.contrib.auth.models import AnonymousUser
+from django import get_version
+from vote.models import Vote
+
 register = template.Library()
+
+
+
+class ScoreForObjectNode(template.Node):
+    def __init__(self, obj, name):
+        self.obj = template.Variable(obj)
+        self.name = name
+
+    def render(self, context):
+        try:
+            obj = self.obj.resolve(context)
+        except template.VariableDoesNotExist:
+            return ''
+        
+        context[self.name] = Vote.objects.count(obj)
+        return ''
+
+@register.tag
+def score_for_object(parser, token):
+    """
+    return the score for the object
+    For example::
+    {% score_for_object object as score %}
+    {{ score.score }}
+    {{ score.num_votes }}
+    """
+    
+    bits = list(token.split_contents())
+    if len(bits) != 4 or bits[2] != "as":
+        raise template.TemplateSyntaxError("%r expected format is 'object as name'" % bits[0])
+    obj     = bits[1]
+    name    = bits[3]
+    
+    return ScoreForObjectNode(obj, name)
+
+class VoteForUserNode(template.Node):
+    def __init__(self, user, obj, name):
+        self.user = template.Variable(user)
+        self.obj = template.Variable(obj)
+        self.name = name
+
+    def render(self, context):
+        try:
+            user = self.user.resolve(context)
+            obj = self.obj.resolve(context)
+        except template.VariableDoesNotExist:
+            return ''
+
+        context[self.name] = Vote.objects.get_for_user(user, obj)
+        return ''
 
 @register.tag
 def vote_for_user(parser, token):
@@ -20,4 +74,3 @@ def vote_for_user(parser, token):
     name    = bits[5]
     
     return VoteForUserNode(user, obj, name)
-
