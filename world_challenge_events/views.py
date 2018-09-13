@@ -1,4 +1,4 @@
-from django.utils import timezone
+
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
@@ -8,13 +8,12 @@ from django.core import serializers
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from vote.models import Vote
 
 from .forms import CreateEventForm
 from .models import Event
-from vote.models import Vote
 
-
-VOTE = (('up', 1), ('down', -1), ('clear', 0))
 
 
 class EventListView(ListView):
@@ -44,6 +43,7 @@ class EventCreateFormView(View):
             event = form.save(commit=False)
             event.owner = User.objects.get(username=request.user)
             event.save()
+            messages.success(request, 'Your event was successfully created')
             return HttpResponseRedirect(
                 '/event/list/')
         else:
@@ -57,44 +57,7 @@ class EventDetailView(DetailView):
 
     model = Event
 
-    def get_event_detail(self, request, primary_key):
-        event = get_object_or_404(Event, pk=primary_key)
-        return render(request, 'world_challenge_events/event_detail.html',
-                      context={'event': event})
-
-
-class VoteView(View):
-    """Class manages voting"""
-
-    @login_required
-    def vote_on_object(request, app, object_id, vote):
-        """
-        Generic object vote function
-        """
-        
-        next = request.REQUEST.get('next', None)
-        if not next:
-            next = request.META.get('HTTP_REFERER', None)
-        if not next:
-            next = '/'
-        
-        print(app)
-        
-        try:
-            app_label, model = app.split('_')
-            ctype = ContentType.objects.get(app_label=app_label, model=model)
-        except ContentType.DoesNotExist:
-            return HttpResponseRedirect(next + '?error=app-not-exists')
-            
-        klass = ctype.model_class()
-        
-        try:
-            Vote.objects.record_vote(klass.objects.get(pk=object_id), request.user, dict(VOTE)[vote])
-        except klass.DoesNotExist:
-            return HttpResponseRedirect(next + '?error=object-not-exists')
-        except KeyError:
-            return HttpResponseRedirect(next + '?error=vote-not-valid')
-        except ValueError:
-            return HttpResponseRedirect(next + '?error=vote-not-valid')
-        
-        return HttpResponseRedirect(next + '?success=vote-registered')
+    def post(self, request, *args, **kwargs):
+        event = Event.objects.get(pk=kwargs['pk'])
+        event.votes.up(request.user.id)
+        return HttpResponseRedirect('/event/list/')
