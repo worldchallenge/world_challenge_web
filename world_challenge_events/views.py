@@ -20,7 +20,7 @@ class EventListView(ListView):
     """Shows Events lined up."""
 
     context_object_name = 'total_event_list'
-    queryset = Event.objects.order_by('name')
+    queryset = Event.objects.order_by('date')
     paginate_by = 50
     template_name = 'world_challenge_events/event_list.html'
 
@@ -60,4 +60,5 @@ class EventDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         event = Event.objects.get(pk=kwargs['pk'])
         event.votes.up(request.user.id)
+        messages.success(request, "Thank you for voting!")
         return HttpResponseRedirect('/event/list/')
