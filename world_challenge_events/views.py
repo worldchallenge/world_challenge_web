@@ -62,3 +62,23 @@ class EventDetailView(DetailView):
         event.votes.up(request.user.id)
         messages.success(request, "Thank you for voting!")
         return HttpResponseRedirect('/event/list/')
+
+
+class OwnershipMixin(object):
+    """
+    Mixin providing a dispatch overload that checks object ownership. is_staff and is_supervisor
+    are considered object owners as well. This mixin must be loaded before any class based views
+    are loaded for example class SomeView(OwnershipMixin, ListView)
+    """
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        # we need to manually "wake up" self.request.user which is still a SimpleLazyObject at this point
+        # and manually obtain this object's owner information.
+        current_user = self.request.user._wrapped if hasattr(self.request.user, '_wrapped') else self.request.user
+        object_owner = getattr(self.get_object(), 'owner')
+
+        if current_user != object_owner and not current_user.is_superuser and not current_user.is_staff:
+            raise PermissionDenied
+        return super(OwnershipMixin, self).dispatch(request, *args, **kwargs)
