@@ -1,9 +1,12 @@
 from django.views.generic.edit import UpdateView, CreateView
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic import DetailView
 from django.views import View
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import  (
+        HttpResponseRedirect, 
+        HttpResponse, 
+        Http404)
 from django.core import serializers
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -55,8 +58,14 @@ class EventUpdateView(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         event = Event.objects.get(pk=kwargs['pk'])
-        if event.owner != self.request.user:
-            raise Http404('Permission Denied!!')
-        return super(EventUpdateView, self).dispatch(request, *args, **kwargs)
+        if event.owner == self.request.user:
+            try:
+                return super(EventUpdateView, self).dispatch(request, *args, **kwargs)
+            except:
+
+                messages.add_message(request, messages.INFO, 'Event has been Updated!!')
+                return redirect('/event/list')
+        messages.add_message(request, messages.INFO, 'Permission Denied!!')
+        return redirect('/event/list')
 
 
