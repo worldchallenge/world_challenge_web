@@ -16,8 +16,6 @@ class Event(VoteModel, models.Model):
     date = models.DateTimeField(default=datetime.now)
     file_upload = models.FileField(upload_to='media', blank=True)
 
-#    def __str__(self):
- #       return self.vote
 
 
 
