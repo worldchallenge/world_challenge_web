@@ -35,6 +35,15 @@ class EventCreateFormView(CreateView):
     form_class = EventCreateForm
     template_name = "world_challenge_events/event_create.html"
 
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.owner = User.objects.get(username=request.user)
+            event.save()
+            messages.success(request, 'Your event was successfully created')
+            return HttpResponseRedirect('/event/list/')
+
 
 class EventDetailView(DetailView):
     """Home page for individual events"""
