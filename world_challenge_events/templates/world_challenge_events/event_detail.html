@@ -2,6 +2,9 @@
 {% load event_tags %}
 
 {% block content %}
+<h3>To update your event</h3>
+<a href="update" class="btn btn-info" role="button">Update</a>
+
 <h1>Event: {{ object.name }}</h1>
 <h2>Event Votes: {{ object.vote_score }} </h2> 
 
@@ -12,6 +15,7 @@
 
 
 <p><strong>Event Submission: </strong>  {{ object.file_upload }}</p>
+
 
 <form method="post">{% csrf_token %}
     <input type="submit" value="Vote">
