@@ -43,6 +43,9 @@ class EventCreateFormView(CreateView):
             event.save()
             messages.success(request, 'Your event was successfully created')
             return HttpResponseRedirect('/event/list/')
+        else:
+            messages.add_message(request, messages.INFO, 'Invalid! Please try again!')
+            return redirect('world_challenge_events/event_create.html')
 
 
 class EventDetailView(DetailView):
@@ -52,6 +55,9 @@ class EventDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         event = Event.objects.get(pk=kwargs['pk'])
+        if event.votes.exists(request.user.id):
+            messages.add_message(request, messages.INFO, 'You have already voted!')
+            return HttpResponseRedirect('/event/list/')
         event.votes.up(request.user.id)
         return HttpResponseRedirect('/event/list/')
 
