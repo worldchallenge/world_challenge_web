@@ -49,3 +49,18 @@ Simple templates are used until style and design are agreed upon.
 2. Login takes you to a page that requests Username and Password with a url http://127.0.0.1:8000/accounts/login/.  If the information is not verified a message "Your username and password didn't match. Please try again." is given.  If successful, the user is taken to http://127.0.0.1:8000/accounts/profile/.  This page so far only shows that authentication is successful and will be developed further.  The Login page also has a Lost Password link that leads to http://127.0.0.1:8000/accounts/password_reset/ and gives a very simple opportunity to Reset Password.
 
 3. The Profile page has a link enabling the user to Logout.
+
+### Event framework
+
+1. New events are created and listed in a common area.
+
+2. The ability to update existing events.
+      - Only the owner is authorized to make changes on events created by them.
+
+3.  Individual event pages are selectable through event listing page.
+
+4.  Each event has the ability to be voted on. 
+      - Users are only able to vote once per event.  
+      - Votes can be rescinded by the voter.
+      - Votes can be aggregated by total and user.
+
