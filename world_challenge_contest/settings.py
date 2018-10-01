@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'world_challenge_events',
     'vote',
     'debug_toolbar',
+    'django_registration',
 ]
 
 MIDDLEWARE = [
@@ -123,13 +126,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# Static settings
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
+# Settings for file uploads such content material
 FILE_UPLOAD_PERMISSIONS = 0o644
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o644
 
+# Media settings for content material 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = "/var/www/media"
 
+# Establishing local server address
 INTERNAL_IPS = '127.0.0.1'
+
+# Registration settings
+ACCOUNT_ACTIVATION_DAYS = 1
+REGISTRATION_OPEN = True
+
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hecklerchris'
+EMAIL_HOST_PASSWORD = os.environn['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = True
+SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
