@@ -133,3 +133,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = "/var/www/media"
 
 INTERNAL_IPS = '127.0.0.1'
+ACCOUNT_ACTIVATION_DAYS = 1
+
+# Sendgrid settings
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False 
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
