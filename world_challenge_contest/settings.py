@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'wc_auth',
     'world_challenge_web',
     'world_challenge_events',
+    'world_challenge_profile',
     'vote',
     'debug_toolbar',
 ]
