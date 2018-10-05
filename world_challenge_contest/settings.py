@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,4 +140,12 @@ ACCOUNT_ACTIVATION_DAYS = 1
 # Sendgrid settings
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False 
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+
+if os.environ.get('SEDNDGRID_API_KEY'):
+    SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
+else:
+    print('Get API key')
+    sys.exit(1)
+
+# Setting wc_auth User as main
+#AUTH_uSER_MODEL = 'wc_auth.User'
