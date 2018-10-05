@@ -16,8 +16,9 @@ from vote.models import Vote
 
 from .forms import EventCreateForm
 from .models import Event
+from django.contrib.auth import get_user_model
 
-
+User = get_user_model()
 
 class EventListView(ListView):
     """Shows Events lined up."""

@@ -1,0 +1,20 @@
+{% extends 'world_challenge_web/base.html' %}
+
+{% block content %}
+<h3>To update your profile </h3>
+<a href="/profile/update" class="btn btn-info" role="button">Update</a>
+
+<h1>Profile: {{ user.username }}</h1>
+{% for user in queryset %}
+
+<p><strong>Bio: </strong>  {{ user.bio }}</p>
+<p><strong>Location: </strong>  {{ user.location }}</p>
+<p><strong>Birth Date:  </strong>  {{ user.birth_date }}</p>
+{% endfor %}
+
+
+<p><strong>Avatar: </strong>  {{ user.avatar }}</p>
+
+
+{% endblock %}
+

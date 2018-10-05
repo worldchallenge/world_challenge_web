@@ -14,7 +14,7 @@ urlpatterns = [
     path('accounts/register/', RegisterView.as_view(), name='register'),
     path('accounts/register/disallowed/',
         TemplateView.as_view(template_name='registration_error.html')),
-    path('accounts/register/activateion_complete/',
+    path('accounts/register/activation_complete/',
         TemplateView.as_view(template_name='registration_complete.html')),
     path('accounts/activate/<activation_key>', ActivateView.as_view(),
         name='activate'), 
