@@ -144,7 +144,7 @@ EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 if os.environ.get('SEDNDGRID_API_KEY'):
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 else:
-    print('Get API key')
+    print("'SENDGRID_API_KEY' not in environment, please set!")
     sys.exit(1)
 
 # Setting wc_auth User as main
