@@ -141,7 +141,7 @@ ACCOUNT_ACTIVATION_DAYS = 1
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False 
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 
-if os.environ.get('SEDNDGRID_API_KEY'):
+if os.environ.get('SENDGRID_API_KEY'):
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 else:
     print("'SENDGRID_API_KEY' not in environment, please set!")
