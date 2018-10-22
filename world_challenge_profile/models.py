@@ -10,7 +10,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     date = models.DateTimeField(default=datetime.now)
-    avatar = models.ImageField(blank=True)
+    avatar = models.ImageField(null=True, blank=True)
 
     def get_absolute_url(self):
         return reverse('profile-detail', kwargs={'pk': self.pk})

@@ -8,6 +8,6 @@ from .views import (
 urlpatterns = [
     path('list/', ProfileListView.as_view(), name='profile-list' ),
     path('detail/<pk>/', ProfileDetailView.as_view(), name='profile-detail'),
-    path('update', ProfileCreateUpdateView.as_view(), name='profile-update'),
+    path('update/<pk>/', ProfileCreateUpdateView.as_view(pk='pk'), name='profile-update'),
         
         ]

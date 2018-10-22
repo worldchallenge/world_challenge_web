@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import Http404
 from django.urls import reverse
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.list import ListView 
 from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model
@@ -23,42 +23,32 @@ class ProfileDetailView(DetailView):
     """ A page displaying individual profiles.
     """
 
-    model = Profile 
+    model = User 
     template_name = 'world_challenge_profile/profile_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileDetailView, self).get_context_data(**kwargs)
-        user = self.kwargs.get(self.pk_url_kwarg)
-        queryset = Profile.objects.filter(user_id=user).values()
-        context.update({'queryset': queryset})
-        return context 
 
-class ProfileCreateUpdateView(FormView):
+class ProfileCreateUpdateView(UpdateView):
     """ Enables Update
         Denied if user is not Owner.
     """
-
+    model = Profile
     form_class = ProfileUpdateForm
     template_name = 'world_challenge_profile/profile_form.html'
-    success_url = '/profile/detail/<pk>'
+    success_url = '/profile/detail/<pk>/'
+    pk = 'pk' 
+    def get_queryset(self):
+        return Profile.objects.all()
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            form = get_form(ProfileUpdateFor(request.POST))
-            if form_valid(form):
-                context = get_context_data()
-                return render_to_response(self, context)
-
-
-    def get_form(self, form_class=ProfileUpdateForm):
-
-        try:
-            profile = Profile.objects.get(user=self.request.user)
-            return form_class(**self.get_form_kwargs())
-        except (Profile.IntegrityError, Profile.DoesNotExist) as e:
-            return form_class(**self.get_form_kwargs())
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.save(Profile.objects.all().update())
-        return super(ProfileCreateUpdateView, self).form_valid(form)
+            form = ProfileUpdateForm(request.POST, instance=request.user)
+            if form.is_valid():
+                cleaned_data = Super(form, self).clean()
+                obj = form.save(commit=False)
+                obj.save()
+                return render(request, get_success_url) 
+            else:
+                form = ProfileUpdateForm()
+                return render(request, template_name, {'form': form})
+        else:
+            return redirect(request, 'profile/list') 

@@ -2,18 +2,18 @@
 
 {% block content %}
 <h3>To update your profile </h3>
-<a href="/profile/update" class="btn btn-info" role="button">Update</a>
+<a href="{% url 'profile-update' user.id %}" class="btn btn-info" role="button">Update</a>
 
 <h1>Profile: {{ user.username }}</h1>
 {% for user in queryset %}
 
-<p><strong>Bio: </strong>  {{ user.bio }}</p>
-<p><strong>Location: </strong>  {{ user.location }}</p>
-<p><strong>Birth Date:  </strong>  {{ user.birth_date }}</p>
+<p><strong>Bio: </strong>  {{ profile.bio }}</p>
+<p><strong>Location: </strong>  {{ profile.location }}</p>
+<p><strong>Birth Date:  </strong>  {{ profile.birth_date }}</p>
 {% endfor %}
 
 
-<p><strong>Avatar: </strong>  {{ user.avatar }}</p>
+<p><strong>Avatar: </strong>  {{ profile.avatar }}</p>
 
 
 {% endblock %}
