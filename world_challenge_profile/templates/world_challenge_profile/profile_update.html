@@ -1,9 +1,13 @@
 {% extends 'world_challenge_web/base.html' %} 
 {% block content %}
-<h1>Create Profile</h1>
-<form action="/profile/detail/<pk>/" method="post">
-{% csrf_token %} 
-{{ form.as_p }}
+
+
+{<h1>Update Profile</h1>
+<form method="POST">
+  {% csrf_token %} 
+  {{ form.as_p }}
 <button type="submit">Save</button>
+
+
 </form>
 {% endblock %}

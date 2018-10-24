@@ -2,12 +2,14 @@ from django.urls import path, include
 from .views import (
     ProfileListView, 
     ProfileDetailView,
-    ProfileCreateUpdateView,
+    ProfileUpdateView,
+    ProfileCreateView,
 )
 
 urlpatterns = [
     path('list/', ProfileListView.as_view(), name='profile-list' ),
     path('detail/<pk>/', ProfileDetailView.as_view(), name='profile-detail'),
-    path('update/<pk>/', ProfileCreateUpdateView.as_view(pk='pk'), name='profile-update'),
+    path('update/<pk>/', ProfileUpdateView.as_view(), name='profile-update'),
+    path('create/<pk>/', ProfileCreateView.as_view(), name='profile-create'),
         
         ]

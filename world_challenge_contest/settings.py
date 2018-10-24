@@ -148,4 +148,4 @@ else:
     sys.exit(1)
 
 # Setting wc_auth User as main
-#AUTH_uSER_MODEL = 'wc_auth.User'
+AUTH_PROFILE_MODULE = 'world_challenge_profile.Profile' 
