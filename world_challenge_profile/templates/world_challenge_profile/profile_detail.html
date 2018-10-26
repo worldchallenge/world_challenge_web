@@ -4,12 +4,14 @@
 
 {% block content %}
     <h1>Profile</h1>
+ {%  if object.id == request.user.id  %}
 <p3>To update your profile ==> </p3>
 <a href="{% url 'profile-update' user.id %}" class="btn btn-dark" role="button">Update</a>
+{% endif %}
     <div class="container">
         <p>Username: {{ user.username }}</p>
-        <p>First name: {{ user.first_name }}</p>
-        <p>Last name: {{ user.last_name }}</p>
+        <p>First name: {{ user.profile.first_name }}</p>
+        <p>Last name: {{ user.profile.last_name }}</p>
         <p>Email: {{ user.email }}</p>
         <p>Bio: {{ user.profile.bio }}</p>
         <p>Location: {{ user.profile.location }}</p>

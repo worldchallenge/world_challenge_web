@@ -9,11 +9,14 @@ from django.urls import reverse
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, null=False)
+    last_name = models.CharField(max_length=100, null=False)
     bio = models.TextField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=30, null=True, blank=True)
     birth_date = models.DateField(blank=True, null=True)
     date = models.DateTimeField(default=datetime.now)
     avatar = models.ImageField(blank=True, null=True)
+    owner = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('profile-detail', kwargs={'pk': self.pk})
@@ -21,10 +24,13 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

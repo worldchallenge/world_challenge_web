@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.core import serializers
 
 from .models import Profile
-from .forms import ProfileUpdateForm, ProfileCreateForm
+from .forms import ProfileUpdateForm
 
 User = get_user_model()
 
@@ -31,24 +31,10 @@ class ProfileDetailView(DetailView):
     template_name = 'world_challenge_profile/profile_detail.html'
     context_object_name = 'profile_set'
     success_url = '/detail/<pk>'
-    data = Profile.objects.all()
 
 
 
-class ProfileCreateView(FormView):
-
-    form_class = ProfileCreateForm
-    template_name = 'world_challenge_profile/profile_form.html'
-
-    def form_valid(self, form):
-        form.save(self, request.user)
-        return super(ProfileCreateView, self).form_valid(form)
-
-    def get_success_url(self, *args, **kwargs):
-        return reverse("profile-detail")
-
-
-class ProfileUpdateView(UpdateView):
+class ProfileUpdateView(CreateView):
     """ Enables Update
         Denied if user is not Owner.
     """
@@ -57,12 +43,30 @@ class ProfileUpdateView(UpdateView):
     template_name = 'world_challenge_profile/profile_update.html'
 
 
+
     def get_object(self, *args, **kwargs):
         user = get_object_or_404(User, pk=self.kwargs['pk'])
         return user.profile
 
     def get_success_url(self, *args, **kwargs):
         return reverse("profile-list")
+    
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            form = ProfileUpdateForm(request.POST,
+                    instance=Profile.objects.get(user=request.user))
+            if form.is_valid():
+                form.clean()
+                #form.owner = True
+                form.save()
+                messages.add_message(request, messages.INFO, 'Success!')
+                return render(request, 'world_challenge_profile/profile_list.html', {'form':form})
+            else:
+                form = ProfileUpdateForm(instance=request.user.profile)
+                return render(request, 'world_challenge_profile/profile_update.html', {'form':form})
+        return render(request, 'world_challenge_profile/profile_update.html', {'form':form})
+
+
 
 
 

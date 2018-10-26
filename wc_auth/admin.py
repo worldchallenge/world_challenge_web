@@ -6,7 +6,7 @@ from world_challenge_profile.models import Profile
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
-    verbose_name_plural = 'Profile'
+    verbose_name_plural = 'Profiles'
     fk_name = 'user'
 
 class CustomUserAdmin(UserAdmin):
