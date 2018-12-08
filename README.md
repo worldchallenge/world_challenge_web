@@ -64,3 +64,20 @@ Simple templates are used until style and design are agreed upon.
       - Votes can be rescinded by the voter.
       - Votes can be aggregated by total and user.
 
+
+### Profile framework
+
+1. Individual selects the "SignUp" tab top left corner.
+
+2. User enters username, email and password.
+
+3. Email is sent for verification and user selects link to be validated.
+
+4. User is now able to log in.
+
+5. Under Profile is a tab "List Profiles" which show all Profiles created thus far.  Profiles are able to be viewed by all.
+
+6. If user selects their own profile it will show the ability to update.  Only users own profile is eligible for update.
+
+7. Fields available so far: first name, last name, bio, location and birthdate.  Avatars will be added later. 
+
