@@ -65,7 +65,7 @@ Simple templates are used until style and design are agreed upon.
       - Votes can be aggregated by total and user.
 
 
-### Profile framework
+### Profile framework - (branch: auth+profile)
 
 1. Individual selects the "SignUp" tab top left corner.
 
@@ -79,5 +79,4 @@ Simple templates are used until style and design are agreed upon.
 
 6. If user selects their own profile it will show the ability to update.  Only users own profile is eligible for update.
 
-7. Fields available so far: first name, last name, bio, location and birthdate.  Avatars will be added later. 
-
+7. Fields available so far: first name, last name, bio, location and birthdate.  Avatars will be added later.
