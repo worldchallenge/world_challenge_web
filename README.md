@@ -40,15 +40,28 @@ pip install -r requirements.txt
 ./manage.py runserver 0.0.0.0:8000
 ```
 
-### Basic Login and Logout process
 
 Simple templates are used until style and design are agreed upon.
 
-1. Homepage located at 127.0.0.1:8000/home/ consists of a single link to Login.
+1. Homepage located at 127.0.0.1:8000/ 
 
-2. Login takes you to a page that requests Username and Password with a url http://127.0.0.1:8000/accounts/login/.  If the information is not verified a message "Your username and password didn't match. Please try again." is given.  If successful, the user is taken to http://127.0.0.1:8000/accounts/profile/.  This page so far only shows that authentication is successful and will be developed further.  The Login page also has a Lost Password link that leads to http://127.0.0.1:8000/accounts/password_reset/ and gives a very simple opportunity to Reset Password.
 
-3. The Profile page has a link enabling the user to Logout.
+### Profile framework
+
+1. Individual selects the "SignUp" tab top left corner.
+
+2. User enters username, email and password.
+
+3. Email is sent for verification and user selects link to be validated.
+
+4. User is now able to log in.
+
+5. Under Profile is a tab "List Profiles" which show all Profiles created thus far.  Profiles are able to be viewed by all.
+
+6. If user selects their own profile it will show the ability to update.  Only users own profile is eligible for update.
+
+7. Fields available so far: first name, last name, bio, location and birthdate.  Avatars will be added later.
+
 
 ### Event framework
 
@@ -65,18 +78,3 @@ Simple templates are used until style and design are agreed upon.
       - Votes can be aggregated by total and user.
 
 
-### Profile framework - (branch: auth+profile)
-
-1. Individual selects the "SignUp" tab top left corner.
-
-2. User enters username, email and password.
-
-3. Email is sent for verification and user selects link to be validated.
-
-4. User is now able to log in.
-
-5. Under Profile is a tab "List Profiles" which show all Profiles created thus far.  Profiles are able to be viewed by all.
-
-6. If user selects their own profile it will show the ability to update.  Only users own profile is eligible for update.
-
-7. Fields available so far: first name, last name, bio, location and birthdate.  Avatars will be added later.
